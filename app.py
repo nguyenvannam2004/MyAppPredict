@@ -74,6 +74,11 @@ if st.button("Dự đoán"):
             result = 1
         else:
             result = 0
+    elif model == model_ensemble:
+        scaler_loaded = joblib.load('scaler_ensemble.pkl')
+        features_df = scaler_loaded.transform(features_df)
+        prediction = model.predict(features_df)
+        result = prediction[0]
     else:
         # Dự đoán cho các mô hình còn lại
         prediction = model.predict(features_df)
