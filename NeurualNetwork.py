@@ -63,26 +63,12 @@ class NeuralNetwork:
         final_input = np.dot(hidden_layer_output, self.weights_hidden_output)
         final_output = self.sigmoid(final_input)
 
-        #Chuyển đổi đầu ra thành nhãn dự đoán
+        #Chuyển đổi đầu ra thành nhãn dự đoán 0.57
         y_pred = (final_output > 0.57).astype(int)
         return y_pred
 
-    # Lưu mô hình vào file
-    def save_model(self, filename):
-        model = {
-            "weights_input_hidden": self.weights_input_hidden,
-            "weights_hidden_output": self.weights_hidden_output
-        }
-        joblib.dump(model, filename)
 
-    # Tải mô hình từ file
-    @classmethod
-    def load_model(cls, filename):
-        model = joblib.load(filename)
-        nn = cls(model['weights_input_hidden'].shape[0], model['weights_hidden_output'].shape[0], model['weights_hidden_output'].shape[1])
-        nn.weights_input_hidden = model['weights_input_hidden']
-        nn.weights_hidden_output = model['weights_hidden_output']
-        return nn
+    
 
 # Đọc dữ liệu từ file CSV và chuẩn bị tập huấn luyện, kiểm tra, xác thực
 file_path = './mynewdata.csv'  # Thay đổi đường dẫn tới tệp của bạn
@@ -193,7 +179,7 @@ class_report = classification_report(y_test, y_test_pred)
 print('Báo cáo phân loại:')
 print(class_report)
 
-new_data = np.array([44,1,0,112,290,0,0,153,0,0.0,2,1,2])
+new_data = np.array([53,1,0,123,282,0,1,95,1,2.0,1,2,3])
 
 # Dự đoán với dữ liệu mới
 predictions = nn.predict(new_data)

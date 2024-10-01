@@ -91,7 +91,7 @@ if st.button("Dự đoán"):
             "Đừng buồn, bạn hãy chạy vào trong vườn hái một quả chanh.\n"
             "Bổ đôi nó ra (nhớ là phải bổ ngang nha) xong vắt nó vào cốc, cho 2 thìa đường,\n"
             "500ml nước đun sôi để nguội.Cho thêm 2 viên đá nữa cho mát rồi khuấy đều lên sẽ thu đc dung dịch hay còn gọi là nước đường.\n"
-            "Uống nó! Nó sẽ không giúp bạn hết bị bệnh tim đâu nhưng mà nước đường thì rất là ngọt, với lại biết đâu đó có thể sẽ là lần cuối cùng mà bạn đc uống nước đường thì sao =))))"
+            "Uống nó! Nó sẽ không giúp bạn hết bị bệnh tim đâu nhưng mà nước đường thì rất là ngọt, với lại biết đâu đó có thể sẽ là lần cuối cùng mà bạn đc uống nước đường thì sao =))))\n\nĐấy là ai độc mồm độc miệng người ta nói thế ý chứ, thực tế vẫn nên uống nước đường nha, tuy ko giúp bạn hết bị bệnh tim đâu nhưng ít nhất trước khi từ nửa tạ về còn vài lạng thì bạn vẫn còn nhớ được vị của nước đường"
         )
     else:
         result_message = "Không có nguy cơ mắc bệnh tim."
