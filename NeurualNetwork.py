@@ -193,7 +193,7 @@ class_report = classification_report(y_test, y_test_pred)
 print('Báo cáo phân loại:')
 print(class_report)
 
-new_data = np.array([62,0,1,124,281,1,1,103,0,1.4,1,1,1])
+new_data = np.array([44,1,0,112,290,0,0,153,0,0.0,2,1,2])
 
 # Dự đoán với dữ liệu mới
 predictions = nn.predict(new_data)

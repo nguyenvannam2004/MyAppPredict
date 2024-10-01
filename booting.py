@@ -168,10 +168,10 @@ plt.show()
 
 
 joblib.dump(calibrated_model, 'ensemble_model.pkl') 
+# Lưu scaler vào tệp
+joblib.dump(scaler, 'scaler_ensemble.pkl')
 # ensemble_model
 # joblib.dump(ensemble_model, 'ensemble_model.pkl')
-
-
 
 # Giả sử ngưỡng mới mà bạn muốn sử dụng là 0.3
 # custom_threshold = 0.47
@@ -200,3 +200,18 @@ joblib.dump(calibrated_model, 'ensemble_model.pkl')
 # plt.ylabel('Thực tế')
 # plt.title(f'Ma trận nhầm lẫn với ngưỡng {custom_threshold}')
 # plt.show()
+
+
+# Dự đoán cho dữ liệu mới
+# Giả sử dữ liệu mới có đặc trưng tương tự như dữ liệu đã huấn luyện
+# Bạn cần cung cấp dữ liệu mới (thay đổi các giá trị cho phù hợp với dữ liệu của bạn)
+X_new = np.array([[61,0,0,145,307,0,0,146,1,1.0,1,0,3]])
+
+# Chuẩn hóa dữ liệu mới sử dụng scaler đã được huấn luyện
+X_new_scaled = scaler.transform(X_new)
+
+# Dự đoán lớp cho dữ liệu mới
+y_new_pred = calibrated_model.predict(X_new_scaled)
+print(f'Dự đoán lớp cho dữ liệu mới: {y_new_pred}')
+
+
