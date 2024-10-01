@@ -53,7 +53,7 @@ class NeuralNetwork:
             self.weights_input_hidden += X_train.T.dot(d_hidden_layer) * self.learning_rate - self.lambda_reg * self.weights_input_hidden
 
     # Hàm dự đoán
-    def predict(self, X_new):
+    def predict(self, X_new,thresol):
         # Chuẩn hóa dữ liệu mới
         X_new = (X_new - np.mean(X_new, axis=0)) / np.std(X_new, axis=0)
 
@@ -64,12 +64,11 @@ class NeuralNetwork:
         final_output = self.sigmoid(final_input)
 
         #Chuyển đổi đầu ra thành nhãn dự đoán 0.57
-        y_pred = (final_output > 0.57).astype(int)
+        y_pred = (final_output > thresol).astype(int)
         return y_pred
 
 
     
-
 # Đọc dữ liệu từ file CSV và chuẩn bị tập huấn luyện, kiểm tra, xác thực
 file_path = './mynewdata.csv'  # Thay đổi đường dẫn tới tệp của bạn
 data = pd.read_csv(file_path)
@@ -114,21 +113,21 @@ nn = NeuralNetwork(input_size, hidden_size, output_size)
 nn.train(X_train_resampled, y_train_resampled)
 
 # Dự đoán trên tập huấn luyện
-y_train_pred = nn.predict(X_train_resampled)
+y_train_pred = nn.predict(X_train_resampled,0.5)
 
 # Tính độ chính xác trên tập huấn luyện
 train_accuracy = accuracy_score(y_train_resampled, y_train_pred)
 print(f'Dộ chính xác trên tập huấn luyện: {train_accuracy:.10f}')
 
 # Dự đoán trên tập xác thực
-y_val_pred = nn.predict(X_val)
+y_val_pred = nn.predict(X_val,0.5)
 
 # Tính độ chính xác trên tập xác thực
 val_accuracy = accuracy_score(y_val, y_val_pred)
 print(f'Dộ chính xác trên tập xác thực: {val_accuracy:.10f}')
 
-# Dự đoán và đánh giá trên tập kiểm tra
-y_test_pred = nn.predict(X_test)
+# Dự đoán và đánh giá trên tập kiểm tra 
+y_test_pred = nn.predict(X_test,0.57)  #0.5
 
 # Tính độ chính xác trên tập kiểm tra
 test_accuracy = accuracy_score(y_test, y_test_pred)
@@ -182,7 +181,7 @@ print(class_report)
 new_data = np.array([53,1,0,123,282,0,1,95,1,2.0,1,2,3])
 
 # Dự đoán với dữ liệu mới
-predictions = nn.predict(new_data)
+predictions = nn.predict(new_data,0.57)
 
 # In kết quả dự đoán
 print("Dự đoán:", predictions)

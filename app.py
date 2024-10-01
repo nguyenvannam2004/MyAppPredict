@@ -79,6 +79,9 @@ if st.button("Dự đoán"):
         features_df = scaler_loaded.transform(features_df)
         prediction = model.predict(features_df)
         result = prediction[0]
+    elif model == model_neural:
+        prediction = model.predict(features_df,0.57)  #dự đoán với ngưỡng 0.57
+        result = prediction[0]
     else:
         # Dự đoán cho các mô hình còn lại
         prediction = model.predict(features_df)
