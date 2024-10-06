@@ -96,7 +96,7 @@ print(f'Số mẫu của tập huấn luyện: {len(X_train)}')
 print(f'Số mẫu của tập xác thực: {len(X_val)}')
 print(f'Số mẫu của tập kiểm tra: {len(X_test)}')
 
-# Chuẩn hóa dữ liệu bằng StandardScaler
+#Chuẩn hóa dữ liệu bằng StandardScaler
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train_resampled)  # Sử dụng dữ liệu đã được resample
 X_val_scaled = scaler.transform(X_val)
@@ -178,7 +178,7 @@ class_report = classification_report(y_test, y_test_pred)
 print('Báo cáo phân loại:')
 print(class_report)
 
-new_data = np.array([53,1,0,123,282,0,1,95,1,2.0,1,2,3])
+new_data = np.array([63,1,3,145,233,1,0,150,0,2.3,0,0,1])
 
 # Dự đoán với dữ liệu mới
 predictions = nn.predict(new_data,0.57)
