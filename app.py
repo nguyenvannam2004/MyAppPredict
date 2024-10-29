@@ -3,16 +3,14 @@ import joblib
 import pandas as pd
 from NeurualNetwork import NeuralNetwork 
 import numpy as np
-# Tải các mô hình đã lưu
+
 model_pla = joblib.load('perceptron_model.pkl')
 model_logistic = joblib.load('logistic_regression_model.pkl')
 model_neural = joblib.load('neural_network_model.pkl')
-model_ensemble = joblib.load('ensemble_model.pkl')
-
-# Tạo tiêu đề cho ứng dụng
+#model_ensemble = joblib.load('ensemble_model.pkl')
+model_ensemble = joblib.load('new_ensemble_model_hard_voting.pkl')
 st.title("Dự Đoán Bệnh Tim")
 
-# Tạo một dropdown để chọn mô hình
 model_options = {
     'PLA Model': model_pla,
     'Logistic Regression Model': model_logistic,
@@ -20,7 +18,6 @@ model_options = {
     'Ensemble Model': model_ensemble
 }
 
-# Nhập dữ liệu đầu vào
 age = st.number_input("Tuổi:", min_value=0, max_value=120)
 sex = st.selectbox("Giới tính:", options=[0, 1], format_func=lambda x: "Nam" if x == 1 else "Nữ")
 cp = st.selectbox("Chỉ số đau ngực:", options=[0, 1, 2, 3],format_func=lambda x: "Không đau" if x==0 else "Đau ngực nhẹ" if x==1 else "Đau ngực vừa" if x==2 else "Đau ngực nặng")
@@ -35,7 +32,7 @@ slope = st.selectbox("Độ dốc của đỉnh ST:", options=[0, 1, 2],format_f
 ca = st.selectbox("Số mạch máu lớn:", options=[0, 1, 2, 3, 4])
 thal = st.selectbox("Thalassemia:", options=[0, 1, 2, 3],format_func=lambda x: "Bình thường" if x==0 else "Khuyết tật cố hữu" if x==1 else "Khuyết tật tạm thời" if x==2 else "Không rõ")
 selected_model = st.selectbox("Chọn mô hình:", list(model_options.keys()))
-# Nút dự đoán
+
 if st.button("Dự đoán"):
     features = [
         age,
@@ -53,22 +50,18 @@ if st.button("Dự đoán"):
         thal
     ]
    
-    # Chuyển đổi thành DataFrame với tên cột
     feature_names = ['age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 
                      'restecg', 'thalach', 'exang', 'oldpeak', 
                      'slope', 'ca', 'thal']
     features_df = pd.DataFrame([features], columns=feature_names)
 
-    # Dự đoán bằng mô hình đã chọn
     model = model_options[selected_model]
 
     if model == model_pla:
-        # Sử dụng decision_function cho mô hình PLA
-        # Tải scaler từ tệp (đối với dữ liệu mới)
         scaler_loaded = joblib.load('scaler.pkl')
-        features_df = scaler_loaded.transform(features_df)  # Chuẩn hóa dữ liệu
+        features_df = scaler_loaded.transform(features_df)  
         prediction = model.decision_function(features_df)  
-        probability = 1 / (1 + np.exp(-prediction))  # Chuyển đổi thành xác suất
+        probability = 1 / (1 + np.exp(-prediction))  
         
         if probability >= 0.65:
             result = 1
@@ -80,14 +73,11 @@ if st.button("Dự đoán"):
         prediction = model.predict(features_df)
         result = prediction[0]
     elif model == model_neural:
-        prediction = model.predict(features_df,0.57)  #dự đoán với ngưỡng 0.57
+        prediction = model.predict(features_df,0.57)  
         result = prediction[0]
     else:
-        # Dự đoán cho các mô hình còn lại
         prediction = model.predict(features_df)
         result = prediction[0]
-
-    # Kết quả dự đoán
     if result == 1:
         result_message = (
             "Có nguy cơ mắc bệnh tim.\n\n"
